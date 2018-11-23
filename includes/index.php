@@ -1,5 +1,5 @@
 <?php
-include 'function.php';
+include 'functions.php';
 
 //single movie route
 if (isset($_GET["movie"])) {
