@@ -9,6 +9,10 @@
       videodata : [],
       singledata : [],
 
+      videotitle : "",
+      videodescription : "",
+      videosource : "", 
+
       showdetails : false
 
     },
@@ -24,8 +28,29 @@
         console.log('login functionality');
       },
 
+      fetchSingle(e) {
+        //debugger;
+        this.fetchMovieData(e.currentTarget.dataset.movie);
+      },
+
+      loadMovie(e) {
+        //debugger;
+        e.preventDefault(); //block a page relod anchor tag default behavour
+
+        dataKey = e.currentTarget.getAttribute('href');
+        currentData = this.videodata.filter(video => video.vid_path === dataKey);
+
+        this.videotitle = currentData[0].vid_name;
+        this.videodescription = currentData[0].vid_desc;
+        this.videosource = dataKey;
+
+        this.showdetails = true;
+
+        setTimeout(function(){ window.scrollTo(0, 1200)}, 500);
+      },
+
       fetchMovieData(movie) {
-        url = movie ? `./includes/index.php?movie=${$movie}` : './includes/index.php';
+        let url = movie ? `./includes/index.php?movie=${movie}` : './includes/index.php';
         //this is a ternary statement (shorthand for if/else). left of the : is true, right is false
 
 fetch(url)
@@ -40,13 +65,15 @@ fetch(url)
   } else {
     this.videodata = data;
     }
+
   })
+
   .catch(function(error) {
     console.log(error);
   });
 
-}
-      }
+    }
+  }
 
   });
 })();
